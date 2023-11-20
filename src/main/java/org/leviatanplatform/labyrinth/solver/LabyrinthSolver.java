@@ -10,10 +10,10 @@ import java.util.Set;
 
 public class LabyrinthSolver {
 
-    public static boolean isDirectionPossible(Direction direction, char[][] map, int KR, int KC, Character chBarrierExtra){
+    public static boolean isDirectionPossible(Direction direction, char[][] map, int row, int col, Character chBarrierExtra){
 
-        int newR = KR+direction.getDeltaR();
-        int newC = KC+direction.getDeltaC();
+        int newR = row + direction.getDeltaR();
+        int newC = col + direction.getDeltaC();
 
         boolean result = map[newR][newC] != '#' && map[newR][newC] != '?';
 
@@ -24,11 +24,11 @@ public class LabyrinthSolver {
         return result;
     }
 
-    public static Direction findFastestWayToX(char[][] map, int row, int column, char X){
+    public static Direction findFastestWayToX(char[][] map, int row, int col, char X) {
 
         Set<String> setKeyPos = new HashSet<>();
         List<NodePathFind> listNodePathFindInit = new ArrayList<>();
-        addSearchStep(map, row, column, null, listNodePathFindInit, setKeyPos);
+        addSearchStep(map, row, col, null, listNodePathFindInit, setKeyPos);
 
         List<NodePathFind> listNodeIter = listNodePathFindInit;
 

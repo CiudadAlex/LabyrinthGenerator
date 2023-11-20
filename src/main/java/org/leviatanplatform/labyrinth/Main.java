@@ -99,7 +99,7 @@ public class Main {
             }
         }
 
-        Map<String, Direction> mapPosicionDirection = new HashMap<String, Direction>();
+        Map<String, Direction> mapPosicionDirection = new HashMap<>();
 
         for (Direction direction : listDirection){
 
