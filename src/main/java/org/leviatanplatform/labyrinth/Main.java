@@ -1,16 +1,14 @@
 package org.leviatanplatform.labyrinth;
 
 import org.leviatanplatform.labyrinth.model.Direction;
+import org.leviatanplatform.labyrinth.solver.LabyrinthSolver;
 import org.leviatanplatform.labyrinth.solver.SearchStatus;
 import org.leviatanplatform.labyrinth.util.MapObjectToInt;
 import org.leviatanplatform.labyrinth.util.NodePathFind;
 
 import java.util.*;
 
-/**
- * Auto-generated code below aims at helping you parse
- * the standard input according to the problem statement.
- **/
+// FIXME Make the matrix with enum
 public class Main {
 
     private static SearchStatus searchStatus = SearchStatus.SEARCH;
@@ -48,10 +46,10 @@ public class Main {
             Direction direction;
 
             if (SearchStatus.FIND_C.equals(searchStatus)) {
-                direction = findFastestWayToX(map, KR, KC, 'C');
+                direction = LabyrinthSolver.findFastestWayToX(map, KR, KC, 'C');
 
             } else if (SearchStatus.FIND_T.equals(searchStatus)){
-                direction = findFastestWayToX(map, KR, KC, 'T');
+                direction = LabyrinthSolver.findFastestWayToX(map, KR, KC, 'T');
 
             } else {
                 direction = getDirectionSearch(map, KR, KC, lastDirection);
@@ -95,7 +93,7 @@ public class Main {
             int newC = KC+direction.getDeltaC();
             String positionId = newR + "|" + newC;
 
-            if(isDirectionPossible(direction, map, KR, KC, 'C') && !mapKeyPosInSearch.containsKey(positionId)){
+            if(LabyrinthSolver.isDirectionPossible(direction, map, KR, KC, 'C') && !mapKeyPosInSearch.containsKey(positionId)){
                 mapKeyPosInSearch.add(positionId);
                 return direction;
             }
@@ -109,7 +107,7 @@ public class Main {
             int newC = KC+direction.getDeltaC();
             String positionId = newR + "|" + newC;
 
-            if(isDirectionPossible(direction, map, KR, KC, 'C')){
+            if(LabyrinthSolver.isDirectionPossible(direction, map, KR, KC, 'C')){
                 mapPosicionDirection.put(positionId, direction);
             }
         }
@@ -120,86 +118,4 @@ public class Main {
         return mapPosicionDirection.get(posMinArg);
     }
 
-    private static boolean isDirectionPossible(Direction direction, char[][] map, int KR, int KC, Character chBarrierExtra){
-
-        int newR = KR+direction.getDeltaR();
-        int newC = KC+direction.getDeltaC();
-
-        boolean result = map[newR][newC] != '#' && map[newR][newC] != '?';
-
-        if (chBarrierExtra != null){
-            result = result && map[newR][newC] != chBarrierExtra;
-        }
-
-        return result;
-    }
-
-    private static Direction findFastestWayToX(char[][] map, int KR, int KC, char X){
-
-        Set<String> setKeyPos = new HashSet<>();
-        List<NodePathFind> listNodePathFindInit = new ArrayList<>();
-        addSearchStep(map, KR, KC, null, listNodePathFindInit, setKeyPos);
-
-        List<NodePathFind> listNodeIter = listNodePathFindInit;
-
-        while (true) {
-
-            List<NodePathFind> listNodeNext = new ArrayList<>();
-
-            for (NodePathFind nodePathFind : listNodeIter) {
-
-                int rowIter = nodePathFind.getRowDest();
-                int colIter = nodePathFind.getColDest();
-
-                if (map[rowIter][colIter] == X){
-                    return getRootDirection(nodePathFind);
-                }
-
-                addSearchStep(map, rowIter, colIter, nodePathFind, listNodeNext, setKeyPos);
-            }
-
-            listNodeIter = listNodeNext;
-        }
-    }
-
-    private static void addSearchStep(char[][] map, int row, int col, NodePathFind nodeCurrent, List<NodePathFind> listNode, Set<String> setKeyPos){
-
-        for (Direction direction : Direction.values()) {
-
-            //System.err.println("(" + row + "," + col + "," + direction.name() + ") >> isDirectionPossible?");
-
-            boolean isDirectionPossible = isDirectionPossible(direction, map, row, col, null);
-
-            int newR = row+direction.getDeltaR();
-            int newC = col+direction.getDeltaC();
-
-            //System.err.println("(" + row + "," + col + "," + direction.name() + ") >> isDirectionPossible = " + isDirectionPossible);
-
-            if(isDirectionPossible && !setKeyPos.contains(newR+"|"+newC)){
-
-                setKeyPos.add(newR+"|"+newC);
-
-                NodePathFind nodeNext = new NodePathFind(direction, nodeCurrent, newR, newC);
-                listNode.add(nodeNext);
-
-                if (nodeCurrent!=null) {
-                    nodeCurrent.getListNext().add(nodeNext);
-                }
-            }
-        }
-    }
-
-    private static Direction getRootDirection(NodePathFind nodePathFind){
-
-        NodePathFind nodeBefore = nodePathFind;
-        NodePathFind nodeIndex = nodePathFind;
-
-        while(nodeIndex != null){
-
-            nodeBefore = nodeIndex;
-            nodeIndex = nodeIndex.getPrevious();
-        }
-
-        return nodeBefore.getDirection();
-    }
 }
