@@ -4,19 +4,18 @@ import org.leviatanplatform.labyrinth.model.Direction;
 import org.leviatanplatform.labyrinth.model.Labyrinth;
 import org.leviatanplatform.labyrinth.model.Square;
 import org.leviatanplatform.labyrinth.util.NodePathFind;
+import org.leviatanplatform.labyrinth.util.PositionSet;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class LabyrinthSolver {
 
     public static Direction findFastestWayToTarget(Labyrinth labyrinth, int row, int col) {
 
-        Set<String> setKeyPos = new HashSet<>();
+        PositionSet positionSet = new PositionSet();
         List<NodePathFind> listNodePathFindInit = new ArrayList<>();
-        addSearchStep(labyrinth, row, col, null, listNodePathFindInit, setKeyPos);
+        addSearchStep(labyrinth, row, col, null, listNodePathFindInit, positionSet);
 
         List<NodePathFind> listNodeIter = listNodePathFindInit;
 
@@ -33,14 +32,14 @@ public class LabyrinthSolver {
                     return getRootDirection(nodePathFind);
                 }
 
-                addSearchStep(labyrinth, rowIter, colIter, nodePathFind, listNodeNext, setKeyPos);
+                addSearchStep(labyrinth, rowIter, colIter, nodePathFind, listNodeNext, positionSet);
             }
 
             listNodeIter = listNodeNext;
         }
     }
 
-    private static void addSearchStep(Labyrinth labyrinth, int row, int col, NodePathFind nodeCurrent, List<NodePathFind> listNode, Set<String> setKeyPos) {
+    private static void addSearchStep(Labyrinth labyrinth, int row, int col, NodePathFind nodeCurrent, List<NodePathFind> listNode, PositionSet positionSet) {
 
         for (Direction direction : Direction.values()) {
 
@@ -53,9 +52,9 @@ public class LabyrinthSolver {
 
             //System.err.println("(" + row + "," + col + "," + direction.name() + ") >> isDirectionPossible = " + isDirectionPossible);
 
-            if(isDirectionPossible && !setKeyPos.contains(newR+"|"+newC)){
+            if(isDirectionPossible && !positionSet.contains(newR, newC)){
 
-                setKeyPos.add(newR+"|"+newC);
+                positionSet.add(newR, newC);
 
                 NodePathFind nodeNext = new NodePathFind(direction, nodeCurrent, newR, newC);
                 listNode.add(nodeNext);
