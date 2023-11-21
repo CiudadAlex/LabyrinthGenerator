@@ -7,6 +7,7 @@ import org.leviatanplatform.labyrinth.util.NodePathFind;
 import org.leviatanplatform.labyrinth.util.PositionSet;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LabyrinthSolver {
@@ -66,18 +67,24 @@ public class LabyrinthSolver {
         }
     }
 
-    private static Direction getRootDirection(NodePathFind nodePathFind){
+    private static Direction getRootDirection(NodePathFind nodePathFind) {
+        return getSequenceOfDirections(nodePathFind).get(0);
+    }
 
-        NodePathFind nodeBefore = nodePathFind;
+    private static List<Direction> getSequenceOfDirections(NodePathFind nodePathFind) {
+
         NodePathFind nodeIndex = nodePathFind;
 
-        while(nodeIndex != null){
+        List<Direction> listDirections = new ArrayList<>();
 
-            nodeBefore = nodeIndex;
+        while(nodeIndex != null) {
+            listDirections.add(nodeIndex.getDirection());
             nodeIndex = nodeIndex.getPrevious();
         }
 
-        return nodeBefore.getDirection();
+        Collections.reverse(listDirections);
+
+        return listDirections;
     }
 
     private static boolean isDirectionPossible(Direction direction, Labyrinth labyrinth, int row, int col) {

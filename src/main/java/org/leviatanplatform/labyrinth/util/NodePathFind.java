@@ -20,10 +20,6 @@ public class NodePathFind {
         this.colDest = colDest;
     }
 
-    public String getKeyPos() {
-        return rowDest + "|" + colDest;
-    }
-
     public NodePathFind getPrevious() {
         return this.previous;
     }
