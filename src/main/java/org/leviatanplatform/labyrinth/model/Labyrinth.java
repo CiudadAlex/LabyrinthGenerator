@@ -30,4 +30,8 @@ public class Labyrinth {
     public Square getSquare(int row, int col) {
         return map[row][col];
     }
+
+    public void setSquare(int row, int col, Square square) {
+        map[row][col] = square;
+    }
 }
