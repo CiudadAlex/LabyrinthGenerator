@@ -26,7 +26,7 @@ public class Main {
         // FIXME test with all the path (list of Directions)
 
         LabyrinthGenerator labyrinthGenerator = new TShapedLabyrinthGenerator();
-        Labyrinth labyrinth = labyrinthGenerator.generate(30, 50);
+        Labyrinth labyrinth = labyrinthGenerator.generate(70, 150);
 
         //Labyrinth labyrinth = new Labyrinth(MAP);
 

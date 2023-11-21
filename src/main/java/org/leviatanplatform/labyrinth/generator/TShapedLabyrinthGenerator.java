@@ -11,6 +11,8 @@ public class TShapedLabyrinthGenerator implements LabyrinthGenerator {
         Labyrinth labyrinth = new Labyrinth(numRows, numCols);
         makeOutsideWall(labyrinth);
 
+        labyrinth.setSquare(1, 0, Square.START);
+        labyrinth.setSquare(numRows - 2, numCols - 1, Square.TARGET);
 
         // FIXME generate
         return labyrinth;
