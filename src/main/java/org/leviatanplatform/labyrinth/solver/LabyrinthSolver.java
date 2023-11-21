@@ -10,10 +10,17 @@ import java.util.Set;
 
 public class LabyrinthSolver {
 
-    public static boolean isDirectionPossible(Direction direction, char[][] map, int row, int col, Character chBarrierExtra){
+    public static boolean isDirectionPossible(Direction direction, char[][] map, int row, int col, Character chBarrierExtra) {
+
+        int numRows = map.length;
+        int numCols = map[0].length;
 
         int newR = row + direction.getDeltaR();
         int newC = col + direction.getDeltaC();
+
+        if (newR < 0 || newC < 0 || newR >= numRows || newC >= numCols) {
+            return false;
+        }
 
         boolean result = map[newR][newC] != '#' && map[newR][newC] != '?';
 
