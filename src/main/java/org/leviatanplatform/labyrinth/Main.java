@@ -1,5 +1,7 @@
 package org.leviatanplatform.labyrinth;
 
+import org.leviatanplatform.labyrinth.generator.LabyrinthGenerator;
+import org.leviatanplatform.labyrinth.generator.TShapedLabyrinthGenerator;
 import org.leviatanplatform.labyrinth.model.Labyrinth;
 import org.leviatanplatform.labyrinth.model.Square;
 import org.leviatanplatform.labyrinth.viewer.LabyrinthGraphicRepresentation;
@@ -21,7 +23,9 @@ public class Main {
     public static void main(String[] args) {
 
         // FIXME generate
-        // FIXME text with all the path (list of Directions)
+        // FIXME test with all the path (list of Directions)
+
+        LabyrinthGenerator LabyrinthGenerator = new TShapedLabyrinthGenerator();
 
         Labyrinth labyrinth = new Labyrinth(MAP);
 
