@@ -42,6 +42,7 @@ public class TShapedLabyrinthGenerator implements LabyrinthGenerator {
         Direction perpendicular2 = perpendicular.get(1);
         makeCorridorWall(labyrinth, row, col, direction, perpendicular1, corridorLength);
         makeCorridorWall(labyrinth, row, col, direction, perpendicular2, corridorLength);
+        labyrinth.setWallOnlyIfBlank(row + direction.getDeltaR() * (corridorLength + 1), col + direction.getDeltaC() * (corridorLength + 1));
 
         int newRow = row + corridorLength * direction.getDeltaR();
         int newCol = col + corridorLength * direction.getDeltaC();
@@ -50,8 +51,8 @@ public class TShapedLabyrinthGenerator implements LabyrinthGenerator {
     }
 
     private void makeCorridorWall(Labyrinth labyrinth, int row, int col, Direction direction, Direction perpendicular, int corridorLength) {
-        int rowStart = row + perpendicular.getDeltaR();
-        int colStart = col + perpendicular.getDeltaC();
+        int rowStart = row + perpendicular.getDeltaR() + direction.getDeltaR();
+        int colStart = col + perpendicular.getDeltaC() + direction.getDeltaC();
         WallUtils.makeWallInDirection(labyrinth, rowStart, colStart, direction, corridorLength - 1);
     }
 

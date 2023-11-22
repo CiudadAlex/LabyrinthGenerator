@@ -32,6 +32,26 @@ public class Labyrinth {
     }
 
     public void setSquare(int row, int col, Square square) {
+
+        if (areIndexesOutOfBounds(row, col)) {
+            return;
+        }
+
         map[row][col] = square;
+    }
+
+    public void setWallOnlyIfBlank(int row, int col) {
+
+        if (areIndexesOutOfBounds(row, col)) {
+            return;
+        }
+
+        if (getSquare(row, col) == null) {
+            setSquare(row, col, Square.WALL);
+        }
+    }
+
+    private boolean areIndexesOutOfBounds(int row, int col) {
+        return row < 0 || col < 0 || row >= numRows || col >= numCols;
     }
 }

@@ -21,21 +21,21 @@ public class WallUtils {
     public static void makeRowWall(Labyrinth labyrinth, int row, int startCol, int endCol) {
 
         for (int i = startCol; i <= endCol; i++) {
-            labyrinth.setSquare(row, i, Square.WALL);
+            labyrinth.setWallOnlyIfBlank(row, i);
         }
     }
 
     public static void makeColWall(Labyrinth labyrinth, int col, int startRow, int endRow) {
 
         for (int i = startRow; i <= endRow; i++) {
-            labyrinth.setSquare(i, col, Square.WALL);
+            labyrinth.setWallOnlyIfBlank(i, col);
         }
     }
 
     public static void makeWallInDirection(Labyrinth labyrinth, int row, int col, Direction direction, int length) {
 
         for (int i = 0; i < length; i++) {
-            labyrinth.setSquare(row + i * direction.getDeltaR(), col + i * direction.getDeltaC(), Square.WALL);
+            labyrinth.setWallOnlyIfBlank(row + i * direction.getDeltaR(), col + i * direction.getDeltaC());
         }
     }
 
