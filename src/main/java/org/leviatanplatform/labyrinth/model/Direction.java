@@ -47,6 +47,21 @@ public enum Direction {
         return null;
     }
 
+    public List<Direction> getPerpendicular() {
+
+        if (this.equals(UP)) {
+            return List.of(LEFT, RIGHT);
+        } else if(this.equals(DOWN)) {
+            return List.of(LEFT, RIGHT);
+        } else if(this.equals(LEFT)) {
+            return List.of(UP, DOWN);
+        } else if(this.equals(RIGHT)) {
+            return List.of(UP, DOWN);
+        }
+
+        return null;
+    }
+
     public List<Direction> getSequence() {
 
         int numDir = values().length;
