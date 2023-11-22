@@ -25,7 +25,6 @@ public class TShapedLabyrinthGenerator implements LabyrinthGenerator {
 
         extendPaths(labyrinth, 1, 0, Direction.RIGHT);
 
-        // FIXME generate
         return labyrinth;
     }
 
@@ -34,19 +33,24 @@ public class TShapedLabyrinthGenerator implements LabyrinthGenerator {
         int corridorLength = 4;
 
         if (WallUtils.isThereWallInDirection(labyrinth, row, col, direction, corridorLength)) {
+            // FIXME get to the end
             return;
         }
 
         List<Direction> perpendicular = direction.getPerpendicular();
         Direction perpendicular1 = perpendicular.get(0);
         Direction perpendicular2 = perpendicular.get(1);
-        WallUtils.makeWallInDirection(labyrinth, row + perpendicular1.getDeltaR(), col + perpendicular1.getDeltaC(), direction, corridorLength - 1);
-        WallUtils.makeWallInDirection(labyrinth, row + perpendicular2.getDeltaR(), col + perpendicular2.getDeltaC(), direction, corridorLength - 1);
+        makeCorridorWall(labyrinth, row, col, direction, perpendicular1, corridorLength);
+        makeCorridorWall(labyrinth, row, col, direction, perpendicular2, corridorLength);
 
         int newRow = row + corridorLength * direction.getDeltaR();
         int newCol = col + corridorLength * direction.getDeltaC();
         extendPaths(labyrinth, newRow, newCol, perpendicular1);
         extendPaths(labyrinth, newRow, newCol, perpendicular2);
+    }
+
+    private void makeCorridorWall(Labyrinth labyrinth, int row, int col, Direction direction, Direction perpendicular, int corridorLength) {
+        WallUtils.makeWallInDirection(labyrinth, row + perpendicular.getDeltaR(), col + perpendicular.getDeltaC(), direction, corridorLength - 1);
     }
 
 }

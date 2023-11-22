@@ -22,8 +22,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // FIXME generate
-        // FIXME test with all the path (list of Directions)
+        // FIXME solve
 
         LabyrinthGenerator labyrinthGenerator = new TShapedLabyrinthGenerator();
         Labyrinth labyrinth = labyrinthGenerator.generate(70, 150);
