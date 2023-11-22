@@ -2,17 +2,21 @@ package org.leviatanplatform.labyrinth;
 
 import org.leviatanplatform.labyrinth.generator.LabyrinthGenerator;
 import org.leviatanplatform.labyrinth.generator.TShapedLabyrinthGenerator;
+import org.leviatanplatform.labyrinth.model.Direction;
 import org.leviatanplatform.labyrinth.model.Labyrinth;
+import org.leviatanplatform.labyrinth.solver.LabyrinthSolver;
 import org.leviatanplatform.labyrinth.viewer.LabyrinthGraphicRepresentation;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        // FIXME solve
-
         LabyrinthGenerator labyrinthGenerator = new TShapedLabyrinthGenerator();
         Labyrinth labyrinth = labyrinthGenerator.generate(70, 150);
+
+        // FIXME solve
+        Direction direction = LabyrinthSolver.findFastestWayFromStartToTarget(labyrinth);
+        System.out.println("direction = " + direction);
 
         LabyrinthGraphicRepresentation labyrinthGraphicRepresentation = new LabyrinthGraphicRepresentation();
         labyrinthGraphicRepresentation.show(labyrinth);

@@ -12,6 +12,25 @@ import java.util.List;
 
 public class LabyrinthSolver {
 
+    public static Direction findFastestWayFromStartToTarget(Labyrinth labyrinth) {
+
+        final int numRows = labyrinth.getNumRows();
+        final int numCols = labyrinth.getNumCols();
+
+        for (int r = 0; r < numRows; r++) {
+            for (int c = 0; c < numCols; c++) {
+
+                Square square = labyrinth.getSquare(r, c);
+
+                if (Square.START.equals(square)) {
+                    return findFastestWayToTarget(labyrinth, r, c);
+                }
+            }
+        }
+
+        throw new RuntimeException("There is no square START in the labyrinth");
+    }
+
     public static Direction findFastestWayToTarget(Labyrinth labyrinth, int row, int col) {
 
         PositionSet positionSet = new PositionSet();
