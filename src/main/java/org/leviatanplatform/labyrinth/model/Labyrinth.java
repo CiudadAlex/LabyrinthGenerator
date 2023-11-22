@@ -54,4 +54,17 @@ public class Labyrinth {
     private boolean areIndexesOutOfBounds(int row, int col) {
         return row < 0 || col < 0 || row >= numRows || col >= numCols;
     }
+
+    public Labyrinth makeAClone() {
+
+        Square[][] newMap = new Square[numRows][numCols];
+
+        for (int r = 0; r < numRows; r++) {
+            for (int c = 0; c < numCols; c++) {
+                newMap[r][c] = map[r][c];
+            }
+        }
+
+        return new Labyrinth(newMap);
+    }
 }

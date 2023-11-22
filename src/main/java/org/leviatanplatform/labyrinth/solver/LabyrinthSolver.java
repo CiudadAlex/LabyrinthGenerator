@@ -79,7 +79,7 @@ public class LabyrinthSolver {
                 NodePathFind nodeNext = new NodePathFind(direction, nodeCurrent, newR, newC);
                 listNode.add(nodeNext);
 
-                if (nodeCurrent!=null) {
+                if (nodeCurrent != null) {
                     nodeCurrent.getListNext().add(nodeNext);
                 }
             }
