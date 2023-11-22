@@ -42,6 +42,11 @@ public class TShapedLabyrinthGenerator implements LabyrinthGenerator {
         Direction perpendicular2 = perpendicular.get(1);
         WallUtils.makeWallInDirection(labyrinth, row + perpendicular1.getDeltaR(), col + perpendicular1.getDeltaC(), direction, corridorLength - 1);
         WallUtils.makeWallInDirection(labyrinth, row + perpendicular2.getDeltaR(), col + perpendicular2.getDeltaC(), direction, corridorLength - 1);
+
+        int newRow = row + corridorLength * direction.getDeltaR();
+        int newCol = col + corridorLength * direction.getDeltaC();
+        extendPaths(labyrinth, newRow, newCol, perpendicular1);
+        extendPaths(labyrinth, newRow, newCol, perpendicular2);
     }
 
 }
