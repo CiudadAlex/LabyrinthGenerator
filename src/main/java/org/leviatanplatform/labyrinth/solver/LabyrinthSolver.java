@@ -12,6 +12,22 @@ import java.util.List;
 
 public class LabyrinthSolver {
 
+    public static Labyrinth solve(Labyrinth labyrinthOriginal) {
+
+        Labyrinth labyrinth = labyrinthOriginal.makeAClone();
+
+        NodePathFind nodePathFind = findFastestWayNodePathFromStartToTarget(labyrinth);
+
+        NodePathFind nodeIndex = nodePathFind.getPrevious();
+
+        while(nodeIndex != null) {
+            labyrinth.setSquareOnlyIfBlank(nodeIndex.getRowDest(), nodeIndex.getColDest(), Square.PATH);
+            nodeIndex = nodeIndex.getPrevious();
+        }
+
+        return labyrinth;
+    }
+
     public static NodePathFind findFastestWayNodePathFromStartToTarget(Labyrinth labyrinth) {
 
         final int numRows = labyrinth.getNumRows();
