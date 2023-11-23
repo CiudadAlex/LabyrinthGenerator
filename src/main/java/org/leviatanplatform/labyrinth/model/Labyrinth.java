@@ -31,24 +31,19 @@ public class Labyrinth {
         return map[row][col];
     }
 
-    public void setSquare(int row, int col, Square square) {
-
-        if (areIndexesOutOfBounds(row, col)) {
-            return;
-        }
-
-        map[row][col] = square;
-    }
-
-    public void setWallOnlyIfBlank(int row, int col) {
+    public void setSquareOnlyIfBlank(int row, int col, Square square) {
 
         if (areIndexesOutOfBounds(row, col)) {
             return;
         }
 
         if (getSquare(row, col) == null) {
-            setSquare(row, col, Square.WALL);
+            map[row][col] = square;
         }
+    }
+
+    public void setWallOnlyIfBlank(int row, int col) {
+        setSquareOnlyIfBlank(row, col, Square.WALL);
     }
 
     private boolean areIndexesOutOfBounds(int row, int col) {

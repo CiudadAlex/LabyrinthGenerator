@@ -22,7 +22,7 @@ public class Main {
         NodePathFind nodeIndex = nodePathFind.getPrevious();
 
         while(nodeIndex != null) {
-            labyrinth.setSquare(nodeIndex.getRowDest(), nodeIndex.getColDest(), Square.PATH);
+            labyrinth.setSquareOnlyIfBlank(nodeIndex.getRowDest(), nodeIndex.getColDest(), Square.PATH);
             nodeIndex = nodeIndex.getPrevious();
         }
 

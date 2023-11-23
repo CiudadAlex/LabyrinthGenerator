@@ -18,11 +18,10 @@ public class TShapedLabyrinthGenerator implements LabyrinthGenerator {
         //random.nextInt();
 
         Labyrinth labyrinth = new Labyrinth(numRows, numCols);
+        labyrinth.setSquareOnlyIfBlank(1, 0, Square.START);
+        labyrinth.setSquareOnlyIfBlank(numRows - 2, numCols - 1, Square.TARGET);
+
         WallUtils.makeOutsideWall(labyrinth);
-
-        labyrinth.setSquare(1, 0, Square.START);
-        labyrinth.setSquare(numRows - 2, numCols - 1, Square.TARGET);
-
         extendPaths(labyrinth, 1, 0, Direction.RIGHT);
 
         return labyrinth;
