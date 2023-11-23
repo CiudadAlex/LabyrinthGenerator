@@ -13,7 +13,6 @@ public class Main {
         LabyrinthGenerator labyrinthGenerator = new TShapedLabyrinthGenerator();
         Labyrinth labyrinth = labyrinthGenerator.generate(70, 150);
 
-        // FIXME refactor solve
         labyrinth = LabyrinthSolver.solve(labyrinth);
 
         LabyrinthGraphicRepresentation labyrinthGraphicRepresentation = new LabyrinthGraphicRepresentation();
