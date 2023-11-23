@@ -4,6 +4,7 @@ import org.leviatanplatform.labyrinth.generator.util.WallUtils;
 import org.leviatanplatform.labyrinth.model.Direction;
 import org.leviatanplatform.labyrinth.model.Labyrinth;
 import org.leviatanplatform.labyrinth.model.Square;
+import org.leviatanplatform.labyrinth.model.Tuple;
 
 import java.util.List;
 import java.util.Random;
@@ -36,17 +37,21 @@ public class TShapedLabyrinthGenerator implements LabyrinthGenerator {
             return;
         }
 
-        List<Direction> perpendicular = direction.getPerpendicular();
-        Direction perpendicular1 = perpendicular.get(0);
-        Direction perpendicular2 = perpendicular.get(1);
+        Tuple<Direction> tuplePerpendicular = direction.getPerpendicular();
+        Direction perpendicular1 = tuplePerpendicular.getObj1();
+        Direction perpendicular2 = tuplePerpendicular.getObj2();
         makeCorridorWall(labyrinth, row, col, direction, perpendicular1, corridorLength);
         makeCorridorWall(labyrinth, row, col, direction, perpendicular2, corridorLength);
         labyrinth.setWallOnlyIfBlank(row + direction.getDeltaR() * (corridorLength + 1), col + direction.getDeltaC() * (corridorLength + 1));
 
         int newRow = row + corridorLength * direction.getDeltaR();
         int newCol = col + corridorLength * direction.getDeltaC();
-        extendPaths(random, labyrinth, newRow, newCol, perpendicular1);
-        extendPaths(random, labyrinth, newRow, newCol, perpendicular2);
+
+        List<Direction> listPerpendicular = random.nextBoolean() ? List.of(perpendicular1, perpendicular2) : List.of(perpendicular2, perpendicular1);
+
+        for (Direction perpendicular : listPerpendicular) {
+            extendPaths(random, labyrinth, newRow, newCol, perpendicular);
+        }
     }
 
     private void makeCorridorWall(Labyrinth labyrinth, int row, int col, Direction direction, Direction perpendicular, int corridorLength) {

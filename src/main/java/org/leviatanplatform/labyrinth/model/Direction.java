@@ -1,27 +1,21 @@
 package org.leviatanplatform.labyrinth.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public enum Direction {
 
-    UP(-1,0, 1),
+    UP(-1,0),
 
-    DOWN(1,0, 3),
+    DOWN(1,0),
 
-    LEFT(0,-1, 2),
+    LEFT(0,-1),
 
-    RIGHT(0,1, 0);
+    RIGHT(0,1);
 
     private final int deltaR;
     private final int deltaC;
-    private final int seq;
 
-    private Direction(int deltaR, int deltaC, int seq) {
+    Direction(int deltaR, int deltaC) {
         this.deltaR = deltaR;
         this.deltaC = deltaC;
-        this.seq = seq;
     }
 
     public int getDeltaR() {
@@ -32,64 +26,12 @@ public enum Direction {
         return deltaC;
     }
 
-    public Direction getReverse() {
+    public Tuple<Direction> getPerpendicular() {
 
-        if (this.equals(UP)) {
-            return DOWN;
-        } else if(this.equals(DOWN)) {
-            return UP;
-        } else if(this.equals(LEFT)) {
-            return RIGHT;
-        } else if(this.equals(RIGHT)) {
-            return LEFT;
-        }
-
-        return null;
+        return switch (this) {
+            case UP, DOWN -> new Tuple<>(LEFT, RIGHT);
+            case LEFT, RIGHT -> new Tuple<>(UP, DOWN);
+        };
     }
 
-    public List<Direction> getPerpendicular() {
-
-        if (this.equals(UP)) {
-            return List.of(LEFT, RIGHT);
-        } else if(this.equals(DOWN)) {
-            return List.of(LEFT, RIGHT);
-        } else if(this.equals(LEFT)) {
-            return List.of(UP, DOWN);
-        } else if(this.equals(RIGHT)) {
-            return List.of(UP, DOWN);
-        }
-
-        return null;
-    }
-
-    public List<Direction> getSequence() {
-
-        int numDir = values().length;
-        int seqInit = seq + numDir -1;
-
-        List<Direction> listDir = new ArrayList<>();
-
-        for(int i=0; i<numDir; i++){
-            int desiredSeq = (seqInit + i) % numDir;
-            listDir.add(getBySeq(desiredSeq));
-        }
-
-        return listDir;
-    }
-
-    private static Direction getBySeq(int seq) {
-
-        for (Direction direction : values()) {
-
-            if(direction.seq == seq) {
-                return direction;
-            }
-        }
-
-        return null;
-    }
-
-    public static List<Direction> getDefaultSequence() {
-        return Arrays.asList(RIGHT, UP, LEFT, DOWN);
-    }
 }
