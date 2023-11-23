@@ -12,7 +12,7 @@ import java.util.List;
 
 public class LabyrinthSolver {
 
-    public static Direction findFastestWayFromStartToTarget(Labyrinth labyrinth) {
+    public static NodePathFind findFastestWayNodePathFromStartToTarget(Labyrinth labyrinth) {
 
         final int numRows = labyrinth.getNumRows();
         final int numCols = labyrinth.getNumCols();
@@ -23,7 +23,7 @@ public class LabyrinthSolver {
                 Square square = labyrinth.getSquare(r, c);
 
                 if (Square.START.equals(square)) {
-                    return findFastestWayToTarget(labyrinth, r, c);
+                    return findFastestWayNodePathToTarget(labyrinth, r, c);
                 }
             }
         }
@@ -31,7 +31,12 @@ public class LabyrinthSolver {
         throw new RuntimeException("There is no square START in the labyrinth");
     }
 
-    public static Direction findFastestWayToTarget(Labyrinth labyrinth, int row, int col) {
+    public static Direction findFastestWayDirectionToTarget(Labyrinth labyrinth, int row, int col) {
+        NodePathFind nodePathFind = findFastestWayNodePathToTarget(labyrinth, row, col);
+        return getRootDirection(nodePathFind);
+    }
+
+    private static NodePathFind findFastestWayNodePathToTarget(Labyrinth labyrinth, int row, int col) {
 
         PositionSet positionSet = new PositionSet();
         List<NodePathFind> listNodePathFindInit = new ArrayList<>();
@@ -49,7 +54,7 @@ public class LabyrinthSolver {
                 int colIter = nodePathFind.getColDest();
 
                 if (labyrinth.getSquare(rowIter, colIter) == Square.TARGET) {
-                    return getRootDirection(nodePathFind);
+                    return nodePathFind;
                 }
 
                 addSearchStep(labyrinth, rowIter, colIter, nodePathFind, listNodeNext, positionSet);

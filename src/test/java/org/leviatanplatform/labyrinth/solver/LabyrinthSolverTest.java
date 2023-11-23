@@ -25,10 +25,10 @@ class LabyrinthSolverTest {
 
         Labyrinth labyrinth = new Labyrinth(MAP);
 
-        Direction direction = LabyrinthSolver.findFastestWayToTarget(labyrinth, 1, 1);
+        Direction direction = LabyrinthSolver.findFastestWayDirectionToTarget(labyrinth, 1, 1);
         assertEquals(Direction.RIGHT, direction);
 
-        direction = LabyrinthSolver.findFastestWayToTarget(labyrinth, 1, 4);
+        direction = LabyrinthSolver.findFastestWayDirectionToTarget(labyrinth, 1, 4);
         assertEquals(Direction.DOWN, direction);
     }
 }
