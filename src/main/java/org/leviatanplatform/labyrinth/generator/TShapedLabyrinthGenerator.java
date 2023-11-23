@@ -14,25 +14,25 @@ public class TShapedLabyrinthGenerator implements LabyrinthGenerator {
     public Labyrinth generate(int numRows, int numCols) {
 
         Random random = new Random();
-        // FIXME randomize
-        //random.nextInt();
 
         Labyrinth labyrinth = new Labyrinth(numRows, numCols);
         labyrinth.setSquareOnlyIfBlank(1, 0, Square.START);
         labyrinth.setSquareOnlyIfBlank(numRows - 2, numCols - 1, Square.TARGET);
 
         WallUtils.makeOutsideWall(labyrinth);
-        extendPaths(labyrinth, 1, 0, Direction.RIGHT);
+        extendPaths(random, labyrinth, 1, 0, Direction.RIGHT);
 
         return labyrinth;
     }
 
-    private void extendPaths(Labyrinth labyrinth, int row, int col, Direction direction) {
+    private void extendPaths(Random random, Labyrinth labyrinth, int row, int col, Direction direction) {
+
+        // FIXME randomize
+        // FIXME get to the end
 
         int corridorLength = 4;
 
         if (WallUtils.isThereWallInDirection(labyrinth, row, col, direction, corridorLength)) {
-            // FIXME get to the end
             return;
         }
 
@@ -45,8 +45,8 @@ public class TShapedLabyrinthGenerator implements LabyrinthGenerator {
 
         int newRow = row + corridorLength * direction.getDeltaR();
         int newCol = col + corridorLength * direction.getDeltaC();
-        extendPaths(labyrinth, newRow, newCol, perpendicular1);
-        extendPaths(labyrinth, newRow, newCol, perpendicular2);
+        extendPaths(random, labyrinth, newRow, newCol, perpendicular1);
+        extendPaths(random, labyrinth, newRow, newCol, perpendicular2);
     }
 
     private void makeCorridorWall(Labyrinth labyrinth, int row, int col, Direction direction, Direction perpendicular, int corridorLength) {
