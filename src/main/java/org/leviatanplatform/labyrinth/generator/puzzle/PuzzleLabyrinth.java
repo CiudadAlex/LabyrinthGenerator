@@ -2,6 +2,7 @@ package org.leviatanplatform.labyrinth.generator.puzzle;
 
 import org.leviatanplatform.labyrinth.generator.LabyrinthGenerator;
 import org.leviatanplatform.labyrinth.generator.util.WallUtils;
+import org.leviatanplatform.labyrinth.model.Direction;
 import org.leviatanplatform.labyrinth.model.Labyrinth;
 import org.leviatanplatform.labyrinth.model.Square;
 
@@ -25,5 +26,33 @@ public class PuzzleLabyrinth implements LabyrinthGenerator {
         // FIXME finish
 
         return labyrinth;
+    }
+
+    private void paintPiece(Labyrinth labyrinth, Piece piece, int row, int col) {
+
+        labyrinth.setWallOnlyIfBlank(row + 1, col + 1);
+        labyrinth.setWallOnlyIfBlank(row - 1, col - 1);
+        labyrinth.setWallOnlyIfBlank(row + 1, col - 1);
+        labyrinth.setWallOnlyIfBlank(row - 1, col + 1);
+
+        if (!piece.isUp()) {
+            Direction dir = Direction.UP;
+            labyrinth.setWallOnlyIfBlank(row + dir.getDeltaR(), col + dir.getDeltaC());
+        }
+
+        if (!piece.isDown()) {
+            Direction dir = Direction.DOWN;
+            labyrinth.setWallOnlyIfBlank(row + dir.getDeltaR(), col + dir.getDeltaC());
+        }
+
+        if (!piece.isLeft()) {
+            Direction dir = Direction.LEFT;
+            labyrinth.setWallOnlyIfBlank(row + dir.getDeltaR(), col + dir.getDeltaC());
+        }
+
+        if (!piece.isRight()) {
+            Direction dir = Direction.RIGHT;
+            labyrinth.setWallOnlyIfBlank(row + dir.getDeltaR(), col + dir.getDeltaC());
+        }
     }
 }

@@ -14,11 +14,19 @@ public enum Piece {
     TRI_L( true,  true, false,  true),
     TRI_R( true,  true,  true, false);
 
-    private boolean up;
-    private boolean down;
-    private boolean left;
-    private boolean right;
+    private final boolean up;
+    private final boolean down;
+    private final boolean left;
+    private final boolean right;
 
+    /**
+     * Constructor of the Piece.
+     *
+     * @param up true if the piece is open up.
+     * @param down true if the piece is open down.
+     * @param left true if the piece is open left.
+     * @param right true if the piece is open right.
+     */
     Piece(boolean up, boolean down, boolean left, boolean right) {
         this.up = up;
         this.down = down;
