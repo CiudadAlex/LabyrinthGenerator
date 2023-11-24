@@ -28,9 +28,6 @@ public class TShapedLabyrinthGenerator implements LabyrinthGenerator {
 
     private void extendPaths(Random random, Labyrinth labyrinth, int row, int col, Direction direction) {
 
-        // FIXME randomize
-        // FIXME get to the end
-
         int corridorLength = 4;
 
         if (WallUtils.isThereWallInDirection(labyrinth, row, col, direction, corridorLength)) {

@@ -19,6 +19,10 @@ public class LabyrinthSolver {
 
         NodePathFind nodePathFind = findFastestWayNodePathFromStartToTarget(labyrinth);
 
+        if (nodePathFind == null) {
+            return labyrinth;
+        }
+
         NodePathFind nodeIndex = nodePathFind.getPrevious();
 
         while(nodeIndex != null) {
@@ -34,6 +38,10 @@ public class LabyrinthSolver {
         List<Position> listPosition = new ArrayList<>();
 
         NodePathFind nodePathFind = findFastestWayNodePathFromStartToTarget(labyrinth);
+
+        if (nodePathFind == null) {
+            return null;
+        }
 
         NodePathFind nodeIndex = nodePathFind.getPrevious();
 
@@ -67,7 +75,7 @@ public class LabyrinthSolver {
 
     public static Direction findFastestWayDirectionToTarget(Labyrinth labyrinth, int row, int col) {
         NodePathFind nodePathFind = findFastestWayNodePathToTarget(labyrinth, row, col);
-        return getRootDirection(nodePathFind);
+        return nodePathFind != null ? getRootDirection(nodePathFind) : null;
     }
 
     private static NodePathFind findFastestWayNodePathToTarget(Labyrinth labyrinth, int row, int col) {
