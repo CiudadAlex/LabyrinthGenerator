@@ -1,5 +1,6 @@
-package org.leviatanplatform.labyrinth.generator;
+package org.leviatanplatform.labyrinth.generator.tshape;
 
+import org.leviatanplatform.labyrinth.generator.LabyrinthGenerator;
 import org.leviatanplatform.labyrinth.generator.util.WallUtils;
 import org.leviatanplatform.labyrinth.model.Direction;
 import org.leviatanplatform.labyrinth.model.Labyrinth;

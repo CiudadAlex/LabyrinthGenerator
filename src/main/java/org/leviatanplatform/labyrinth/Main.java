@@ -1,7 +1,7 @@
 package org.leviatanplatform.labyrinth;
 
 import org.leviatanplatform.labyrinth.generator.LabyrinthGenerator;
-import org.leviatanplatform.labyrinth.generator.TShapedLabyrinthGenerator;
+import org.leviatanplatform.labyrinth.generator.tshape.TShapedLabyrinthGenerator;
 import org.leviatanplatform.labyrinth.model.Labyrinth;
 import org.leviatanplatform.labyrinth.solver.LabyrinthSolver;
 import org.leviatanplatform.labyrinth.viewer.LabyrinthGraphicRepresentation;
