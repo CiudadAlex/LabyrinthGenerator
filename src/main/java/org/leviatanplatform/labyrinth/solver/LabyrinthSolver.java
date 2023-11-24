@@ -2,6 +2,7 @@ package org.leviatanplatform.labyrinth.solver;
 
 import org.leviatanplatform.labyrinth.model.Direction;
 import org.leviatanplatform.labyrinth.model.Labyrinth;
+import org.leviatanplatform.labyrinth.model.Position;
 import org.leviatanplatform.labyrinth.model.Square;
 import org.leviatanplatform.labyrinth.util.NodePathFind;
 import org.leviatanplatform.labyrinth.util.PositionSet;
@@ -26,6 +27,23 @@ public class LabyrinthSolver {
         }
 
         return labyrinth;
+    }
+
+    public static List<Position> getSolutionPositions(Labyrinth labyrinth) {
+
+        List<Position> listPosition = new ArrayList<>();
+
+        NodePathFind nodePathFind = findFastestWayNodePathFromStartToTarget(labyrinth);
+
+        NodePathFind nodeIndex = nodePathFind.getPrevious();
+
+        while(nodeIndex != null) {
+            Position position = new Position(nodeIndex.getRowDest(), nodeIndex.getColDest());
+            listPosition.add(position);
+            nodeIndex = nodeIndex.getPrevious();
+        }
+
+        return listPosition;
     }
 
     public static NodePathFind findFastestWayNodePathFromStartToTarget(Labyrinth labyrinth) {
@@ -55,14 +73,11 @@ public class LabyrinthSolver {
     private static NodePathFind findFastestWayNodePathToTarget(Labyrinth labyrinth, int row, int col) {
 
         PositionSet positionSet = new PositionSet();
-        List<NodePathFind> listNodePathFindInit = new ArrayList<>();
-        addSearchStep(labyrinth, row, col, null, listNodePathFindInit, positionSet);
+        List<NodePathFind> listNodeIter = getNextSteps(labyrinth, row, col, null, positionSet);
 
-        List<NodePathFind> listNodeIter = listNodePathFindInit;
+        while (!listNodeIter.isEmpty()) {
 
-        while (true) {
-
-            List<NodePathFind> listNodeNext = new ArrayList<>();
+            List<NodePathFind> listAllNextSteps = new ArrayList<>();
 
             for (NodePathFind nodePathFind : listNodeIter) {
 
@@ -73,34 +88,37 @@ public class LabyrinthSolver {
                     return nodePathFind;
                 }
 
-                addSearchStep(labyrinth, rowIter, colIter, nodePathFind, listNodeNext, positionSet);
+                List<NodePathFind> listNextSteps = getNextSteps(labyrinth, rowIter, colIter, nodePathFind, positionSet);
+                listAllNextSteps.addAll(listNextSteps);
             }
 
-            listNodeIter = listNodeNext;
+            listNodeIter = listAllNextSteps;
         }
+
+        return null;
     }
 
-    private static void addSearchStep(Labyrinth labyrinth, int row, int col, NodePathFind nodeCurrent, List<NodePathFind> listNode, PositionSet positionSet) {
+    private static List<NodePathFind> getNextSteps(Labyrinth labyrinth, int row, int col, NodePathFind nodeCurrent, PositionSet positionSet) {
+
+        List<NodePathFind> listNodeNext = new ArrayList<>();
 
         for (Direction direction : Direction.values()) {
-
-            //System.err.println("(" + row + "," + col + "," + direction.name() + ") >> isDirectionPossible?");
 
             boolean isDirectionPossible = isDirectionPossible(direction, labyrinth, row, col);
 
             int newR = row+direction.getDeltaR();
             int newC = col+direction.getDeltaC();
 
-            //System.err.println("(" + row + "," + col + "," + direction.name() + ") >> isDirectionPossible = " + isDirectionPossible);
-
-            if(isDirectionPossible && !positionSet.contains(newR, newC)){
+            if (isDirectionPossible && !positionSet.contains(newR, newC)) {
 
                 positionSet.add(newR, newC);
 
                 NodePathFind nodeNext = new NodePathFind(direction, nodeCurrent, newR, newC);
-                listNode.add(nodeNext);
+                listNodeNext.add(nodeNext);
             }
         }
+
+        return listNodeNext;
     }
 
     private static Direction getRootDirection(NodePathFind nodePathFind) {
