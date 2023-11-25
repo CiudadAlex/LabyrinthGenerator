@@ -2,8 +2,12 @@ package org.leviatanplatform.labyrinth.viewer;
 
 import org.leviatanplatform.labyrinth.model.Labyrinth;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class LabyrinthGraphicRepresentation {
 
@@ -44,6 +48,28 @@ public class LabyrinthGraphicRepresentation {
                 LabyrinthGraphicRepresentationUtils.paintCurrentListOfStars(g, labyrinth, getWidth(), getHeight());
             }
         };
+    }
+
+    public void saveScreenShot() throws IOException {
+
+        BufferedImage bufferedImage = getScreenShot();
+
+        File outputFile = new File("./out/labyrinth.jpg");
+        ImageIO.write(bufferedImage, "jpg", outputFile);
+    }
+
+    private BufferedImage getScreenShot() {
+
+        Component component = canvas;
+
+        BufferedImage image = new BufferedImage(
+                component.getWidth(),
+                component.getHeight(),
+                BufferedImage.TYPE_INT_RGB
+        );
+
+        component.paint( image.getGraphics() );
+        return image;
     }
 
 }
