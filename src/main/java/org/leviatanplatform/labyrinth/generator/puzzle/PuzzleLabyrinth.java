@@ -6,7 +6,9 @@ import org.leviatanplatform.labyrinth.model.Direction;
 import org.leviatanplatform.labyrinth.model.Labyrinth;
 import org.leviatanplatform.labyrinth.model.Square;
 
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Stream;
 
 public class PuzzleLabyrinth implements LabyrinthGenerator {
     @Override
@@ -23,9 +25,28 @@ public class PuzzleLabyrinth implements LabyrinthGenerator {
 
         WallUtils.makeOutsideWall(labyrinth);
 
+        for (int r = 1; r < numRows; r = r + 2) {
+            for (int c = 1; c < numCols; c = c + 2) {
+                decideAndPaintPiece(labyrinth, r, c, random);
+            }
+        }
+
         // FIXME finish
 
         return labyrinth;
+    }
+
+    private void decideAndPaintPiece(Labyrinth labyrinth, int row, int col, Random random) {
+
+        List<Piece> listPossiblePieces = Stream.of(Piece.values()).filter(p -> fitsPiece(labyrinth, p, row, col)).toList();
+
+        if (listPossiblePieces.isEmpty()) {
+            return;
+        }
+
+        int randomIndex = random.nextInt(listPossiblePieces.size());
+        Piece randomPiece = listPossiblePieces.get(randomIndex);
+        paintPiece(labyrinth, randomPiece, row, col);
     }
 
     private boolean fitsPiece(Labyrinth labyrinth, Piece piece, int row, int col) {
