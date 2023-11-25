@@ -49,4 +49,35 @@ public enum Piece {
     public boolean isRight() {
         return right;
     }
+
+    public int getWeight() {
+        if (numberOfOpenings() == 2) {
+            return 1;
+        }
+
+        return 2;
+    }
+
+    public int numberOfOpenings() {
+
+        int openings = 0;
+
+        if (isUp()) {
+            openings++;
+        }
+
+        if (isDown()) {
+            openings++;
+        }
+
+        if (isLeft()) {
+            openings++;
+        }
+
+        if (isRight()) {
+            openings++;
+        }
+
+        return openings;
+    }
 }

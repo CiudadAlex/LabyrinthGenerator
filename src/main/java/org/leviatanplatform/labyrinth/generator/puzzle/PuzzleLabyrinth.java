@@ -44,9 +44,26 @@ public class PuzzleLabyrinth implements LabyrinthGenerator {
             return;
         }
 
-        int randomIndex = random.nextInt(listPossiblePieces.size());
-        Piece randomPiece = listPossiblePieces.get(randomIndex);
+        Piece randomPiece = selectRandomPieceUsingWeight(listPossiblePieces, random);
         paintPiece(labyrinth, randomPiece, row, col);
+    }
+
+    private Piece selectRandomPieceUsingWeight(List<Piece> listPieces, Random random) {
+
+        int numWeighted = listPieces.stream().mapToInt(Piece::getWeight).sum();
+        int randomIndicator = random.nextInt(numWeighted);
+        int sum = 0;
+
+        for (Piece piece : listPieces) {
+
+            sum = sum + piece.getWeight();
+
+            if (sum >= randomIndicator) {
+                return piece;
+            }
+        }
+
+        return null;
     }
 
     private boolean fitsPiece(Labyrinth labyrinth, Piece piece, int row, int col) {
