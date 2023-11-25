@@ -32,8 +32,8 @@ public class PuzzleLabyrinth implements LabyrinthGenerator {
             }
         }
 
-        labyrinth = RegionFiller.fillReachableFromPoint(labyrinth, 1, 0);
-        labyrinth = RegionFiller.fillReachableFromPoint(labyrinth, numRows - 2, numCols - 1);
+        //labyrinth = RegionFiller.fillReachableFromPoint(labyrinth, 1, 0, Square.FILL_START);
+        //labyrinth = RegionFiller.fillReachableFromPoint(labyrinth, numRows - 2, numCols - 1, Square.FILL_TARGET);
 
         // FIXME finish
 

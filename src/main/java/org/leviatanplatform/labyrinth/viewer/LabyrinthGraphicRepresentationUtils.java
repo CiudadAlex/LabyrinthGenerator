@@ -37,6 +37,10 @@ public class LabyrinthGraphicRepresentationUtils {
             g.setColor(new Color(255, 128, 0));
         } else if (Square.PATH.equals(square)) {
             g.setColor(Color.GREEN);
+        } else if (Square.FILL_START.equals(square)) {
+            g.setColor(new Color(255, 255, 0));
+        } else if (Square.FILL_TARGET.equals(square)) {
+            g.setColor(new Color(0, 255, 255));
         } else {
             g.setColor(Color.white);
         }

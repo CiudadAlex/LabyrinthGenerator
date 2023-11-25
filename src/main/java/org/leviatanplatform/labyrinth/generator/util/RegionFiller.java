@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RegionFiller {
 
-    public static Labyrinth fillReachableFromPoint(Labyrinth labyrinthOriginal, int row, int col) {
+    public static Labyrinth fillReachableFromPoint(Labyrinth labyrinthOriginal, int row, int col, Square fill) {
 
         Labyrinth labyrinth = labyrinthOriginal.makeAClone();
 
@@ -22,7 +22,7 @@ public class RegionFiller {
         while (!listPosition.isEmpty()) {
 
             for (Position position : listPosition) {
-                List<Position> listPositionIter = fillReachableFromPointAndReturnTheirPositions(labyrinth, position);
+                List<Position> listPositionIter = fillReachableFromPointAndReturnTheirPositions(labyrinth, position, fill);
                 listPositionNext.addAll(listPositionIter);
             }
 
@@ -33,7 +33,7 @@ public class RegionFiller {
         return labyrinth;
     }
 
-    private static List<Position> fillReachableFromPointAndReturnTheirPositions(Labyrinth labyrinth, Position position) {
+    private static List<Position> fillReachableFromPointAndReturnTheirPositions(Labyrinth labyrinth, Position position, Square fill) {
 
         List<Position> listPosition = new ArrayList<>();
 
@@ -47,7 +47,7 @@ public class RegionFiller {
                 Square square = labyrinth.getSquare(row, col);
 
                 if (square == null) {
-                    labyrinth.setSquareOnlyIfBlank(row, col, Square.PATH);
+                    labyrinth.setSquareOnlyIfBlank(row, col, fill);
                     listPosition.add(new Position(row, col));
                 }
             }
