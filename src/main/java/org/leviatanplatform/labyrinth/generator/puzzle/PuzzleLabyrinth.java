@@ -28,6 +28,33 @@ public class PuzzleLabyrinth implements LabyrinthGenerator {
         return labyrinth;
     }
 
+    private boolean fitsPiece(Labyrinth labyrinth, Piece piece, int row, int col) {
+
+        if (piece.isUp() && isThereAWallInDirection(labyrinth, row, col, Direction.UP)) {
+            return false;
+        }
+
+        if (piece.isDown() && isThereAWallInDirection(labyrinth, row, col, Direction.DOWN)) {
+            return false;
+        }
+
+        if (piece.isLeft() && isThereAWallInDirection(labyrinth, row, col, Direction.LEFT)) {
+            return false;
+        }
+
+        if (piece.isRight() && isThereAWallInDirection(labyrinth, row, col, Direction.RIGHT)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isThereAWallInDirection(Labyrinth labyrinth, int row, int col, Direction dir) {
+
+        Square square = labyrinth.getSquare(row + dir.getDeltaR(), col + dir.getDeltaC());
+        return square == Square.WALL;
+    }
+
     private void paintPiece(Labyrinth labyrinth, Piece piece, int row, int col) {
 
         labyrinth.setWallOnlyIfBlank(row + 1, col + 1);
@@ -36,23 +63,23 @@ public class PuzzleLabyrinth implements LabyrinthGenerator {
         labyrinth.setWallOnlyIfBlank(row - 1, col + 1);
 
         if (!piece.isUp()) {
-            Direction dir = Direction.UP;
-            labyrinth.setWallOnlyIfBlank(row + dir.getDeltaR(), col + dir.getDeltaC());
+            putWallInDirection(labyrinth, row, col, Direction.UP);
         }
 
         if (!piece.isDown()) {
-            Direction dir = Direction.DOWN;
-            labyrinth.setWallOnlyIfBlank(row + dir.getDeltaR(), col + dir.getDeltaC());
+            putWallInDirection(labyrinth, row, col, Direction.DOWN);
         }
 
         if (!piece.isLeft()) {
-            Direction dir = Direction.LEFT;
-            labyrinth.setWallOnlyIfBlank(row + dir.getDeltaR(), col + dir.getDeltaC());
+            putWallInDirection(labyrinth, row, col, Direction.LEFT);
         }
 
         if (!piece.isRight()) {
-            Direction dir = Direction.RIGHT;
-            labyrinth.setWallOnlyIfBlank(row + dir.getDeltaR(), col + dir.getDeltaC());
+            putWallInDirection(labyrinth, row, col, Direction.RIGHT);
         }
+    }
+
+    private static void putWallInDirection(Labyrinth labyrinth, int row, int col, Direction dir) {
+        labyrinth.setWallOnlyIfBlank(row + dir.getDeltaR(), col + dir.getDeltaC());
     }
 }
