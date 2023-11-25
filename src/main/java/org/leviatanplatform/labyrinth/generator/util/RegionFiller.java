@@ -41,12 +41,17 @@ public class RegionFiller {
 
             int row = position.getRow() + direction.getDeltaR();
             int col = position.getCol() + direction.getDeltaC();
-            Square square = labyrinth.getSquare(row, col);
 
-            if (square == null) {
-                labyrinth.setSquareOnlyIfBlank(row, col, Square.PATH);
-                listPosition.add(new Position(row, col));
+            if (!labyrinth.areIndexesOutOfBounds(row, col)) {
+
+                Square square = labyrinth.getSquare(row, col);
+
+                if (square == null) {
+                    labyrinth.setSquareOnlyIfBlank(row, col, Square.PATH);
+                    listPosition.add(new Position(row, col));
+                }
             }
+
         }
 
         return listPosition;

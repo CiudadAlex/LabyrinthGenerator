@@ -46,7 +46,7 @@ public class Labyrinth {
         setSquareOnlyIfBlank(row, col, Square.WALL);
     }
 
-    private boolean areIndexesOutOfBounds(int row, int col) {
+    public boolean areIndexesOutOfBounds(int row, int col) {
         return row < 0 || col < 0 || row >= numRows || col >= numCols;
     }
 

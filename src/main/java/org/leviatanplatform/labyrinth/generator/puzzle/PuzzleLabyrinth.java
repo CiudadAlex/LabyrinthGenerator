@@ -1,6 +1,7 @@
 package org.leviatanplatform.labyrinth.generator.puzzle;
 
 import org.leviatanplatform.labyrinth.generator.LabyrinthGenerator;
+import org.leviatanplatform.labyrinth.generator.util.RegionFiller;
 import org.leviatanplatform.labyrinth.generator.util.WallUtils;
 import org.leviatanplatform.labyrinth.model.Direction;
 import org.leviatanplatform.labyrinth.model.Labyrinth;
@@ -30,6 +31,9 @@ public class PuzzleLabyrinth implements LabyrinthGenerator {
                 decideAndPaintPiece(labyrinth, r, c, random);
             }
         }
+
+        labyrinth = RegionFiller.fillReachableFromPoint(labyrinth, 1, 0);
+        labyrinth = RegionFiller.fillReachableFromPoint(labyrinth, numRows - 2, numCols - 1);
 
         // FIXME finish
 
