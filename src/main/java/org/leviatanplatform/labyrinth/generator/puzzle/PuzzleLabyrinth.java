@@ -1,11 +1,11 @@
 package org.leviatanplatform.labyrinth.generator.puzzle;
 
 import org.leviatanplatform.labyrinth.generator.LabyrinthGenerator;
-import org.leviatanplatform.labyrinth.generator.util.RegionFiller;
 import org.leviatanplatform.labyrinth.generator.util.WallUtils;
 import org.leviatanplatform.labyrinth.model.Direction;
 import org.leviatanplatform.labyrinth.model.Labyrinth;
 import org.leviatanplatform.labyrinth.model.Square;
+import org.leviatanplatform.labyrinth.solver.LabyrinthSolver;
 
 import java.util.List;
 import java.util.Random;
@@ -14,6 +14,17 @@ import java.util.stream.Stream;
 public class PuzzleLabyrinth implements LabyrinthGenerator {
     @Override
     public Labyrinth generate(int numRowsInitial, int numColsInitial) {
+
+        Labyrinth labyrinth = tryGenerate(numRowsInitial, numColsInitial);
+
+        while (!LabyrinthSolver.hasSolution(labyrinth)) {
+            labyrinth = tryGenerate(numRowsInitial, numColsInitial);
+        }
+
+        return labyrinth;
+    }
+
+    private Labyrinth tryGenerate(int numRowsInitial, int numColsInitial) {
 
         int numRows = numRowsInitial % 2 == 0 ? numRowsInitial + 1 : numRowsInitial;
         int numCols = numColsInitial % 2 == 0 ? numColsInitial + 1 : numColsInitial;
@@ -34,8 +45,6 @@ public class PuzzleLabyrinth implements LabyrinthGenerator {
 
         //labyrinth = RegionFiller.fillReachableFromPoint(labyrinth, 1, 0, Square.FILL_START);
         //labyrinth = RegionFiller.fillReachableFromPoint(labyrinth, numRows - 2, numCols - 1, Square.FILL_TARGET);
-
-        // FIXME generate until a solvable one is generated
 
         return labyrinth;
     }

@@ -33,6 +33,11 @@ public class LabyrinthSolver {
         return labyrinth;
     }
 
+    public static boolean hasSolution(Labyrinth labyrinth) {
+        List<Position> listPosition = getSolutionPositions(labyrinth);
+        return listPosition != null;
+    }
+
     public static List<Position> getSolutionPositions(Labyrinth labyrinth) {
 
         List<Position> listPosition = new ArrayList<>();
