@@ -55,7 +55,7 @@ public enum Piece {
             return 1;
         }
 
-        return 2;
+        return 5;
     }
 
     public int numberOfOpenings() {
