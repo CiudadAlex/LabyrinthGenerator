@@ -42,6 +42,10 @@ public class Labyrinth {
         }
     }
 
+    public void setWallOnlyIfBlank(Position position) {
+        setSquareOnlyIfBlank(position.getRow(), position.getCol(), Square.WALL);
+    }
+
     public void setWallOnlyIfBlank(int row, int col) {
         setSquareOnlyIfBlank(row, col, Square.WALL);
     }
