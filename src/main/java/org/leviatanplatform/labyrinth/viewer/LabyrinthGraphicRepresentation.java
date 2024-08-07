@@ -50,11 +50,11 @@ public class LabyrinthGraphicRepresentation {
         };
     }
 
-    public void saveScreenShot() throws IOException {
+    public void saveScreenShot(String name) throws IOException {
 
         BufferedImage bufferedImage = getScreenShot();
 
-        File outputFile = new File("./out/labyrinth.jpg");
+        File outputFile = new File("./out/" + name + ".jpg");
         ImageIO.write(bufferedImage, "jpg", outputFile);
     }
 
