@@ -17,10 +17,14 @@ public class LabyrinthOptimizer {
         while (iterateMore(iteration, maxNumberOfOptimizations)) {
 
             Labyrinth labyrinthMod = addWallRemainingSolvableReturnNullIfNotPossible(labyrinth);
+            iteration++;
+            System.out.print(".");
 
             if (labyrinthMod != null) {
                 labyrinth = labyrinthMod;
             } else {
+                System.out.println();
+                System.out.print("Unique solution achieved");
                 break;
             }
         }
