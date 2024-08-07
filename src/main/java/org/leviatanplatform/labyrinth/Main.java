@@ -12,7 +12,13 @@ public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
+        //LabyrinthGenerator labyrinthGenerator = new TShapedLabyrinthGenerator();
         LabyrinthGenerator labyrinthGenerator = new PuzzleLabyrinth();
+        generate(labyrinthGenerator);
+    }
+
+    private static void generate(LabyrinthGenerator labyrinthGenerator) throws IOException, InterruptedException {
+
         Labyrinth labyrinth = labyrinthGenerator.generate(70, 150);
 
         labyrinth = LabyrinthSolver.solve(labyrinth);
